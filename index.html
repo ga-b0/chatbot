@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="app.js"></script>
 </head>
 <body>
+    <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"></div>
     <main>
         <ul>
+            <li class="loading">
+                <i></i>
+                <h4>Cargando...</h4>
+                <h5>Esta acción puede demorar un poco.</h5>
+            </li>
         </ul>
     </main>
     <form>

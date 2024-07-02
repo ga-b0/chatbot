@@ -7,9 +7,12 @@ const $messages = document.querySelector("ul");
 const container = document.querySelector("main");
 const button = document.querySelector("button");
 const $info = document.querySelector("small");
+const $loading = document.querySelector(".loading");
 
 let messages = [];
+let end = false;
 
+/* Llama-3-8B-Instruct-q4f32_1-MLC-1k */
 const SELECTED_MODEL = "gemma-2b-it-q4f32_1-MLC";
 
 const engine = await CreateWebWorkerMLCEngine(
@@ -18,8 +21,12 @@ const engine = await CreateWebWorkerMLCEngine(
   {
   initProgressCallback: (info) => {
     $info.textContent = `${info.text}`;
-    if (info.progress === 1) {
+    if (info.progress === 1 && !end) {
+      end = true;
+      $loading?.parentNode?.removeChild($loading);
       button.disabled = false;
+      addMessage("¡Hola! Soy un BOT que se ejecuta en tu navegador. ¿En qué puedo ayudarte hoy?", 'bot');
+      input.focus();
     }
   },
 });
@@ -51,7 +58,7 @@ form.addEventListener("submit", async (event) => {
 
   let reply = "";
 
-  const botText = addMessage("", "bot");
+  const botText = addMessage("Escribiendo...", "bot");
 
   for await(const chunk of chunks){
     const choice = chunk.choices[0];
@@ -88,4 +95,3 @@ function addMessage(text, sender) {
   return $text;
 }
 
-console.log("Hola");
